@@ -8,7 +8,6 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
-@ToString
 public class OllamaAPIResponse {
     private String model;
     private String create_at;
@@ -22,6 +21,21 @@ public class OllamaAPIResponse {
     private Integer eval_count;
     private Long eval_duration;
 
+    public String toString() {
+        return "OllamaAPIResponse{ " +
+                "model='" + model + '\'' +
+                ", create_at='" + create_at + '\'' +
+                ", response='" + response.stripTrailing() + '\'' +
+                ", done=" + done +
+                //", context=" + context +
+                ", total_duration=" + total_duration +
+                //", load_duration=" + load_duration +
+                //", prompt_eval_count=" + prompt_eval_count +
+                //", prompt_eval_duration=" + prompt_eval_duration +
+                //", eval_count=" + eval_count +
+                //", eval_duration=" + eval_duration +
+                '}';
+    }
     //{
     //  "model": "llama3.2",
     //  "created_at": "2023-08-04T19:22:45.499127Z",

@@ -1,9 +1,11 @@
 package com.tibell.ai.ollama.ollama;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class OllamaAPIOptions {
     private Double temperature = Double.valueOf(0);

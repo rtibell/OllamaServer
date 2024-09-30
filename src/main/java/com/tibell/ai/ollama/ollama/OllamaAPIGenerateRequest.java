@@ -11,11 +11,12 @@ import lombok.*;
 @ToString
 public class OllamaAPIGenerateRequest {
     private String model;
-    public String prompt;
-    public String suffix;
-    public String format;
-    public OllamaAPIOptions options;
-    public Boolean stream;
-    public Boolean raw;
+    private String prompt;
+    private String suffix;
+    private String format;
+    private OllamaAPIOptions options;
+    private Boolean stream;
+    private Boolean raw;
+    private Integer keep_alive;
 
 }

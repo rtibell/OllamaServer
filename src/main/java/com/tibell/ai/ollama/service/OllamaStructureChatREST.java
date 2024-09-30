@@ -3,6 +3,7 @@ package com.tibell.ai.ollama.service;
 import com.tibell.ai.ollama.message.MessageCommand;
 import com.tibell.ai.ollama.message.StructuredChatMessageCommand;
 import com.tibell.ai.ollama.ollama.OllamaAPIGenerateRequest;
+import com.tibell.ai.ollama.ollama.OllamaAPIOptions;
 import com.tibell.ai.ollama.ollama.OllamaAPIResponse;
 import com.tibell.ai.ollama.ollama.OllamemRestAPI;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OllamaStructureChatREST implements OllamaStructureChat {
     private static final String OLLAME_RESPONSE_FORMAT = "json";
-    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma fält för \"namn\" och \"kategorier\", båda är arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten. Namnen skall sparas i JSON fältet  \"names\" och kategorier i fältet \"categorys\". Fyll också i strängen \"description\" med en sammanfattning av texten som beskriver innehållet i texten med en mening.  Svara endast med det ifylda JSON-objectet: { \"names\": [], \"categorys\": [], \"description\": \"\" }. Svara endast med det ifylda JSON objektet eller ett tomt objekt om svar ej kan ges. Texten börjar här: ";
+    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma fält för \"namn\" och \"kategorier\", båda är arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten. Namnen skall sparas i JSON fältet  \"names\" och kategorier i fältet \"categorys\". Fyll också i strängen \"description\" med en sammanfattning av texten som beskriver innehållet i texten med en mening.  Svara skall endast innehålla det ifylda JSON-objectet: { \"names\": [], \"categorys\": [], \"description\": \"\" }. Svara med ett tomt objekt om svar ej kan ges. Texten börjar här: ";
 
     @Value("${ollama.api.model}")
     private String model;
@@ -35,8 +36,10 @@ public class OllamaStructureChatREST implements OllamaStructureChat {
                 .model(model)
                 .format(OLLAME_RESPONSE_FORMAT)
                 .prompt(prompt)
+                .options(new OllamaAPIOptions(1.0))
                 .stream(false)
                 .raw(true)
+                .keep_alive(10)
                 .build();
         log.info("queryNameCategoryOneliner request: {}", request.toString());
         OllamaAPIResponse response = ollamemRestAPI.generate(request);
