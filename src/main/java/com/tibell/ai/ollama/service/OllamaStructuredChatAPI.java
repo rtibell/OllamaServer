@@ -2,6 +2,7 @@ package com.tibell.ai.ollama.service;
 
 import com.tibell.ai.ollama.message.MessageCommand;
 import com.tibell.ai.ollama.message.StructuredChatMessageCommand;
+import com.tibell.ai.ollama.ollama.OllamaAPIResponse;
 import io.github.ollama4j.OllamaAPI;
 import io.github.ollama4j.exceptions.OllamaBaseException;
 import io.github.ollama4j.models.OllamaResult;
@@ -39,7 +40,7 @@ public class OllamaStructuredChatAPI implements OllamaStructureChat {
 //        ollamaAPI.setRequestTimeoutSeconds(30);
     }
 
-    public void queryNameCategoryOneliner(MessageCommand messageCommand) {
+    public OllamaAPIResponse queryNameCategoryOneliner(MessageCommand messageCommand) {
         log.info("Connecting to Ollama API at: {} with model {}", apiUrl, model);
         OllamaAPI locAPI = new OllamaAPI(apiUrl);
         locAPI.setRequestTimeoutSeconds(90);
@@ -73,5 +74,6 @@ public class OllamaStructuredChatAPI implements OllamaStructureChat {
             log.info("Result: {}", result.getResponse());
         }
 
+        return null;
     }
 }

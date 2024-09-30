@@ -2,7 +2,9 @@ package com.tibell.ai.ollama.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tibell.ai.ollama.dto.NameCategoryShort;
 import com.tibell.ai.ollama.message.*;
+import com.tibell.ai.ollama.ollama.OllamaAPIResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -69,7 +71,15 @@ public class MessageListener {
             switch (command) {
                 case "NAME_CATEGORY_ONELINER":
                     messageCommand = MAPPER.readValue(message, StructuredChatMessageCommand.class);
-                    ollamaStructuredChat.queryNameCategoryOneliner(messageCommand);
+                    OllamaAPIResponse apiRespons = ollamaStructuredChat.queryNameCategoryOneliner(messageCommand);
+                    NameCategoryShortResponse response = NameCategoryShortResponse.builder()
+                                    .messageType(MessageType.NAME_CATEGORY_ONELINER)
+                                    .model(apiRespons.getModel())
+                                    .context(apiRespons.getContext())
+                                    .response(MAPPER.readValue(apiRespons.getResponse(), NameCategoryShort.class))
+                                    .build();
+                    //sendMessage(response);
+                    messageResponse = response;
                     break;
                 default:
                     messageResponse = new OllamaError(MessageType.ERROR, "Unknown command", "Unknown command");

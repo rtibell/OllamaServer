@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OllamaStructureChatREST implements OllamaStructureChat {
     private static final String OLLAME_RESPONSE_FORMAT = "json";
-    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma \"namn\" och \"kategorier\"-arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten? Kan du också fylla i strängen \"description\" med en sammanfattning som beskriver innehållet i texten med en mening?  Svara endast med det ifylda JSON-objectet. { \"names\": [], \"categorys\": [], \"description\": \"\" }. Svara genom att använda JSON.";
+    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma fält för \"namn\" och \"kategorier\", båda är arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten. Namnen skall sparas i JSON fältet  \"names\" och kategorier i fältet \"categorys\". Fyll också i strängen \"description\" med en sammanfattning av texten som beskriver innehållet i texten med en mening.  Svara endast med det ifylda JSON-objectet: { \"names\": [], \"categorys\": [], \"description\": \"\" }. Svara endast med det ifylda JSON objektet eller ett tomt objekt om svar ej kan ges. Texten börjar här: ";
 
     @Value("${ollama.api.model}")
     private String model;
@@ -25,11 +25,11 @@ public class OllamaStructureChatREST implements OllamaStructureChat {
     }
 
     @Override
-    public void queryNameCategoryOneliner(MessageCommand messageCommand) {
+    public OllamaAPIResponse queryNameCategoryOneliner(MessageCommand messageCommand) {
         log.info("queryNameCategoryOneliner");
         StructuredChatMessageCommand structuredChatMessageCommand = (StructuredChatMessageCommand) messageCommand;
         log.info("Getting response for text: {}", structuredChatMessageCommand.getText());
-        String prompt = PROMPT_TEMPLATE + structuredChatMessageCommand.getText();
+        String prompt = PROMPT_TEMPLATE + " " + structuredChatMessageCommand.getText();
         OllamaAPIGenerateRequest request = OllamaAPIGenerateRequest
                 .builder()
                 .model(model)
@@ -42,5 +42,6 @@ public class OllamaStructureChatREST implements OllamaStructureChat {
         OllamaAPIResponse response = ollamemRestAPI.generate(request);
         log.info("queryNameCategoryOneliner response: {}", response.toString());
         request = null;
+        return response;
     }
 }
