@@ -1,0 +1,27 @@
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 1000
+          max-interval: 10000
+          multiplier: 2
+
+ollama:
+  api:
+    url: http://ml3.tibell.io:33434/api
+    key: 123456789
+    secret: 123456789
+    model: llama3.1:8b
+
+rabbitmq:
+  queue:
+    command_queue: ollama-command
+    responce_queue: ollama-responce
