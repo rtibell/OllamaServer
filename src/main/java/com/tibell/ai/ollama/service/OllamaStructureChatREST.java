@@ -36,10 +36,10 @@ public class OllamaStructureChatREST implements OllamaStructureChat {
                 .model(model)
                 .format(OLLAME_RESPONSE_FORMAT)
                 .prompt(prompt)
-                .options(new OllamaAPIOptions(1.0))
+                .options(new OllamaAPIOptions(0.3))
                 .stream(false)
                 .raw(true)
-                .keep_alive(10)
+                .keep_alive(0)
                 .build();
         log.info("queryNameCategoryOneliner request: {}", request.toString());
         OllamaAPIResponse response = ollamemRestAPI.generate(request);
