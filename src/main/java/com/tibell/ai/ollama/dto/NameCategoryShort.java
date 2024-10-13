@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @ToString
 @Getter
 public class NameCategoryShort {
-    private ArrayList<String> names;
-    private ArrayList<String> categorys;
+    private ArrayList<String> name;
+    private ArrayList<String> category;
     private String description;
 }

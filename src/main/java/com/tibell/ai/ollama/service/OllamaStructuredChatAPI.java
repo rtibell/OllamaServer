@@ -21,8 +21,8 @@ public class OllamaStructuredChatAPI implements OllamaStructureChat {
             Här är ett JSON-objekt med tomma "namn" och "kategorier"-arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten? Kan du också fylla i strängen "description" med en sammanfattning som beskriver innehållet i texten med en mening?
             Svara endast med det ifylda JSON-objectet.
             {
-              "names": [],
-              "categorys": [],
+              "name": [],
+              "category": [],
               "description": ""
             }
             """;

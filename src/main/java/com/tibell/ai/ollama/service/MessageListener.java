@@ -45,9 +45,6 @@ public class MessageListener {
         sendMessage(response, correlationId);
     }
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
-
     private void sendMessage(String messageText) {
         responceTemplate.convertAndSend(responseQueue, messageText);
     }
@@ -61,7 +58,7 @@ public class MessageListener {
             }
             switch (message.getMessageType()) {
                 case ERROR:
-                    sendError((OllamaError) message);
+                    sendError((OllamaError) message, currelationId);
                     break;
                 case CONTACTINFO:
                     //ToDo
@@ -72,6 +69,7 @@ public class MessageListener {
                     String messageText = MAPPER.writeValueAsString(response);
                     responceTemplate.convertAndSend(responseQueue, messageText, m -> {
                         m.getMessageProperties().setHeader("correlation_id", currelationId);
+                        m.getMessageProperties().setHeader("command_type", "NAME_CATEGORY_ONELINER");
                         return m;
                     });
                     break;
@@ -84,11 +82,15 @@ public class MessageListener {
         }
     }
 
-    private void sendError(OllamaError message)  {
+    private void sendError(OllamaError message, String currelationId)  {
         String messageText = null;
         try {
             messageText = MAPPER.writeValueAsString(message);
-            amqpTemplate.convertAndSend(responseQueue, messageText);
+            responceTemplate.convertAndSend(responseQueue, messageText, m -> {
+                m.getMessageProperties().setHeader("correlation_id", currelationId);
+                m.getMessageProperties().setHeader("command_type", "ERROR");
+                return m;
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

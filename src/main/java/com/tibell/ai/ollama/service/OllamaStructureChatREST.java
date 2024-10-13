@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OllamaStructureChatREST implements OllamaStructureChat {
     private static final String OLLAME_RESPONSE_FORMAT = "json";
-    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma fält för \"namn\" och \"kategorier\", båda är arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten. Namnen skall sparas i JSON fältet  \"names\" och kategorier i fältet \"categorys\". Fyll också i strängen \"description\" med en sammanfattning av texten som beskriver innehållet i texten med en mening.  Svara skall endast innehålla det ifylda JSON-objectet: { \"names\": [], \"categorys\": [], \"description\": \"\" }. Svara med ett tomt objekt om svar ej kan ges. Texten börjar här: ";
+    private static final String PROMPT_TEMPLATE = "Här är ett JSON-objekt med tomma fält för \"name\" och \"kategorier\", båda är arrayer. Kan du fylla i dessa arrayer med namnen på personer som nämns i texten och lämpliga nyhetskategori som matchar texten. Namnen skall sparas i JSON fältet  \"name\" och kategorier i fältet \"category\". Fyll också i strängen \"description\" med en sammanfattning av texten som beskriver innehållet i texten med en mening.  Svara skall endast innehålla det ifylda JSON-objectet: { \"name\": [], \"category\": [], \"description\": \"\" }. Svara med ett tomt objekt om svar ej kan ges. Texten börjar här: ";
 
     @Value("${ollama.api.model}")
     private String model;
@@ -36,7 +36,7 @@ public class OllamaStructureChatREST implements OllamaStructureChat {
                 .model(model)
                 .format(OLLAME_RESPONSE_FORMAT)
                 .prompt(prompt)
-                .options(new OllamaAPIOptions(0.3))
+                .options(new OllamaAPIOptions(0.2))
                 .stream(false)
                 .raw(true)
                 .keep_alive(0)
