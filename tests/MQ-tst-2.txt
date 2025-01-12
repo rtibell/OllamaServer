@@ -1,0 +1,3 @@
+{ "text": "Skadade Östersjökablar reparerade. ", "query": "", "model": "glm4:latest", "messageType": "NAME_CATEGORY_ONELINER" }
+
+Header: command_type=NAME_CATEGORY_ONELINER

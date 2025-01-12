@@ -15,6 +15,8 @@ public class OllamaAPIGenerateRequest {
     private String suffix;
     private String format;
     private OllamaAPIOptions options;
+    private String system;
+    private String template;
     private Boolean stream;
     private Boolean raw;
     private Integer keep_alive;

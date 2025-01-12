@@ -4,7 +4,6 @@ package com.tibell.ai.ollama.ollama;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
@@ -20,6 +19,7 @@ public class OllamaAPIResponse {
     private Long prompt_eval_duration;
     private Integer eval_count;
     private Long eval_duration;
+    private Long running_time;
 
     public String toString() {
         return "OllamaAPIResponse{ " +
@@ -27,13 +27,14 @@ public class OllamaAPIResponse {
                 ", create_at='" + create_at + '\'' +
                 ", response='" + response.stripTrailing() + '\'' +
                 ", done=" + done +
-                //", context=" + context +
+                ", context=" + context +
                 ", total_duration=" + total_duration +
-                //", load_duration=" + load_duration +
-                //", prompt_eval_count=" + prompt_eval_count +
-                //", prompt_eval_duration=" + prompt_eval_duration +
-                //", eval_count=" + eval_count +
-                //", eval_duration=" + eval_duration +
+                ", load_duration=" + load_duration +
+                ", prompt_eval_count=" + prompt_eval_count +
+                ", prompt_eval_duration=" + prompt_eval_duration +
+                ", eval_count=" + eval_count +
+                ", eval_duration=" + eval_duration +
+                ", running_time=" + running_time +
                 '}';
     }
     //{
@@ -49,4 +50,8 @@ public class OllamaAPIResponse {
     //  "eval_count": 259,
     //  "eval_duration": 4232710000
     //}
+
+    public void setRunnningTime(Long runningTime) {
+        this.running_time = runningTime;
+    }
 }

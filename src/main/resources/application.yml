@@ -21,9 +21,15 @@ ollama:
     url: http://ml3.tibell.io:33434/api
     key: 123456789
     secret: 123456789
-    model: llama3.1:8b
+    model: glm4:latest
 
 rabbitmq:
   queue:
     command_queue: ollama-command
     responce_queue: ollama-responce
+    exchange: ollama-exchange
+
+logging:
+  level:
+    com:
+      tibell: DEBUG
